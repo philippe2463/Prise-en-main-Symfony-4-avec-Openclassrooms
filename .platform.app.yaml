@@ -1,5 +1,5 @@
 # Le nom de l'application
-name: Prise-en-main-Symfony-4-avec-Openclassrooms
+name: app #Prise-en-main-Symfony-4-avec-Openclassrooms
 
 # Le type d'application à construire
 type: php:7.2
@@ -9,8 +9,8 @@ build:
 variables:
     env:
         # Configuration des variables d'environnement pour Symfony
-        APP_ENV: 'platform'
-        APP_DEBUG: 0
+        APP_ENV: 'prod'
+        APP_DEBUG: 1
 
 ## Yarn is needed to build frontend assets
 dependencies:
