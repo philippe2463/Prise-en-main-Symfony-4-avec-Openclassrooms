@@ -1,5 +1,5 @@
 # Le nom de l'application
-name: app #Prise-en-main-Symfony-4-avec-Openclassrooms
+name: Prise-en-main-Symfony-4-avec-Openclassrooms
 
 # Le type d'application à construire
 type: php:7.2
