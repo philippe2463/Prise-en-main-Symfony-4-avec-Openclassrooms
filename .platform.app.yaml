@@ -1,0 +1,57 @@
+# Le nom de l'application
+name: app #Prise-en-main-Symfony-4-avec-Openclassrooms
+
+# Le type d'application à construire
+type: php:7.2
+build:
+    flavor: composer
+
+variables:
+    env:
+        # Configuration des variables d'environnement pour Symfony
+        APP_ENV: 'platform'
+        APP_DEBUG: 0
+
+## Yarn is needed to build frontend assets
+dependencies:
+  nodejs:
+    yarn: "*"
+
+# The hooks that will be performed when the package is deployed.
+hooks:
+  build: |
+    set -e
+    yarn install
+    yarn run encore production
+    bin/console cache:clear
+  deploy: |
+    set -e
+    bin/console cache:clear
+    php bin/console doctrine:database:drop --force
+    php bin/console doctrine:database:create
+    php bin/console doctrine:schema:create --no-interaction
+    php bin/console doctrine:fixtures:load --no-interaction
+
+# Les services utilisés
+relationships:
+    database: "mysqldb:mysql"
+
+# L'espace disque configurés
+disk: 1024
+
+# Les dossiers qui doivent rester accessibles en écriture
+mounts:
+    "/var/cache": "shared:files/cache"
+    "/var/log": "shared:files/log"
+    "/var/sessions": "shared:files/sessions"
+    "/var/data": "shared:files/data"
+
+# La configuration web
+web:
+    locations:
+        "/":
+            # Dossier public
+            root: "public"
+            # Le contrôleur frontal (qui doit recevoir toutes les requêtes)
+            passthru: "/index.php"
+
